@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="vh-100">
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-5 col-xl-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                         class="img-fluid"
+                         alt="Sample image">
+                </div>
+                <div class="col-md-10 col-lg-8 col-xl-6 offset-xl-1">
+                    <form class="ajax reset redirect row g-3" method="POST" action="{{ url }}">
+                        {% csrf_token %}
+                        <div class="divider d-flex align-items-center my-4">
+                            <h1 class="text-center fw-bold mx-3 mb-0">Sign Up</h1>
+                        </div>
+
+                        <!-- Username input -->
+                        <div class="form-outline mb-0 col-md-6">
+                            <label class="form-label" for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="form-outline mb-0 col-md-6">
+                            <label class="form-label" for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="form-outline mb-0 col-md-6">
+                            <label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-outline mb-0 col-md-6">
+                            <label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+{#                            {{ form.email }}#}
+                            <input type="email" class="form-control form-control-lg" placeholder="Enter email-id"
+                                   name="email" maxlength="100" required="" id="id_email">
+                        </div>
+                        <div class="form-outline mb-0 col-md-6">
+                            <label class="form-label" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                            {{ form.password }}
+                        </div>
+                        <div class="form-outline mb-0 col-md-6">
+                            <label class="form-label" for="{{ form.confirm_password.id_for_label }}">{{ form.confirm_password.label }}</label>
+                            {{ form.confirm_password }}
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button type="submit" class="btn btn-primary btn-lg"
+                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Sign up
+                            </button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account?
+                                <a href="{% url 'accounts:existing_user' %}"
+                                   class="link-danger">Sign in</a>
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

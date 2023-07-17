@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # USER DEFINED APPS
     'basics',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,10 @@ DATABASES = {
         'PORT': config('DB_PORT'),
     }
 }
+
+
+# CUSTOM USER MODEL
+AUTH_USER_MODEL = 'accounts.User'
 
 
 AUTH_PASSWORD_VALIDATORS = [
