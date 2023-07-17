@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="profile-container">
+        <h2>User Profile</h2>
+        <form class="ajax reset redirect row g-3" method="POST" action="{{ url }}">
+            {% csrf_token %}
+            <div class="profile-form-group form-outline mb-0 col-md-6">
+                <label class="form-label" for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+                {{ form.address }}
+            </div>
+            <div class="profile-form-group form-outline mb-0 col-md-6">
+                <label class="form-label" for="{{ form.country.id_for_label }}">{{ form.country.label }}</label>
+                {{ form.country }}
+            </div>
+            <div class="profile-form-group form-outline mb-0 col-md-6">
+                <label class="form-label" for="{{ form.state.id_for_label }}">{{ form.state.label }}</label>
+                {{ form.state }}
+            </div>
+            <div class="profile-form-group form-outline mb-0 col-md-6">
+                <label class="form-label" for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+                {{ form.city }}
+            </div>
+            <div class="profile-form-group form-outline mb-0 col-md-6">
+                <label class="form-label" for="{{ form.district.id_for_label }}">{{ form.district.label }}</label>
+                {{ form.district }}
+            </div>
+            <div class="profile-form-group form-outline mb-0 col-md-6">
+                <label class="form-label" for="{{ form.pin_code.id_for_label }}">{{ form.pin_code.label }}</label>
+                {{ form.pin_code }}
+            </div>
+            <div class="profile-form-group form-outline mb-0 col-md-6">
+                <label class="form-label" for="{{ form.landmark.id_for_label }}">{{ form.landmark.label }}</label>
+                {{ form.landmark }}
+            </div>
+            <div class="profile-form-group form-outline mb-0 col-md-6">
+                <label class="form-label" for="phone_number">Phone number</label>
+                <input type="text" name="phone_number" id="phone_number" placeholder="Enter your contact number" />
+            </div>
+
+            <div class="profile-form-group">
+                <input type="submit" value="Save">
+            </div>
+        </form>
+    </div>
+{% endblock %}

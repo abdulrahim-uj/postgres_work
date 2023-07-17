@@ -53,6 +53,17 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError("Password does not  match!")
 
 
+country_list = (
+    ('', '-- Please select one country --'),
+    ('IN', 'India'),
+    ('US', 'United States'),
+    ('CA', 'Canada'),
+    ('UK', 'United Kingdom'),
+    ('AU', 'Australia'),
+    ('UAE', 'United Arab Emirates'),
+)
+
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -64,8 +75,7 @@ class UserProfileForm(forms.ModelForm):
                                         'class': 'required form-control form-control-lg'}),
             'country_code': TextInput(attrs={'placeholder': 'Enter country code',
                                              'class': 'required form-control form-control-lg'}),
-            'country': TextInput(attrs={'placeholder': 'Enter country',
-                                        'class': 'required form-control form-control-lg'}),
+            'country':  forms.Select(choices=country_list),
             'state': TextInput(attrs={'placeholder': 'Enter state',
                                       'class': 'required form-control form-control-lg'}),
             'city': TextInput(attrs={'placeholder': 'Enter city',

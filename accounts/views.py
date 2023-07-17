@@ -1,14 +1,15 @@
 import json
-
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
 from basics.functions import generate_form_errors
-from .forms import UserForm
-from .models import User
+from .forms import UserForm, UserProfileForm
+from .models import User, UserProfile
+from .utils import send_verification_email
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
 
 
 def signup(request):
@@ -37,6 +38,12 @@ def signup(request):
                                             username=username, email=email_id,
                                             password=password)
             user.save()
+
+            # SEND VERIFICATION EMAIL
+            email_subject = "Activate Your Account"
+            email_template = "accounts/emails/account-verification-email.html"
+            send_verification_email(request, user, email_subject, email_template)
+
             response_data = {
                 "status": "true",
                 "title": "New User",
@@ -121,3 +128,64 @@ def dashboard(request):
         "redirect": True,
     }
     return render(request, 'dashboard/user-home.html', context)
+
+
+def activate(request, uidb64, token):
+    # ACTIVATE THE USER BY SETTING THE is_activate = True
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return redirect('accounts:my_dashboard')
+    else:
+        return redirect('accounts:existing_user')
+
+
+def profile(request):
+    form = UserProfileForm()
+    instance = UserProfile.objects.get(user=request.user)
+    if instance:
+        form = UserProfileForm(instance=instance)
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, instance=instance)
+        contact_number = request.POST.get('phone_number')
+        if form.is_valid():
+            if contact_number:
+                user = User.objects.get(pk=request.user.pk)
+                user.phone_number = contact_number
+                user.save()
+            data = form.save(commit=False)
+            data.country_code = form.cleaned_data['country']
+            data.updater = request.user
+            data.save()
+            response_data = {
+                "status": "true",
+                "title": "New User",
+                "message": "New user Successfully Created.",
+                "redirect": 'true',
+                "redirect_url": reverse('accounts:my_dashboard')
+            }
+        # form is not valid --> Then
+        else:
+            # generating form errors
+            message = generate_form_errors(UserForm, formset=False)
+            response_data = {
+                "status": "false",
+                "stable": "true",
+                "title": "Form validation error",
+                "message": message[0].messages[0]
+            }
+        return HttpResponse(json.dumps(response_data), content_type='application/javascript')
+    else:
+        context = {
+            'title': "Profile",
+            'form': form,
+            'is_bootstrap': True,
+            "redirect": True,
+        }
+        return render(request, 'accounts/profile.html', context)
