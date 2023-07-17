@@ -1,0 +1,11 @@
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+.bottom-space {
+  margin-bottom: 50px;
+}
+
+.top-space {
+  margin-top: 50px;
+}

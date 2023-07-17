@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{{ title }} | {{ app_title }}</title>
+
+    {# INCLUDE STYLES #}
+    {% include 'includes/extras/css.html' %}
+</head>
+<body>
+<div class="app">
+    {# MAIN NAVBAR #}
+    <div class="main-nav" style="background-color: #6f2cf4">
+        <div class="container" style="background-color: #6f2cf4">
+            {% include 'includes/navbar.html' %}
+        </div>
+    </div>
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+{# INCLUDE SCRIPTS #}
+{% include 'includes/extras/js.html' %}
+</body>
+</html>
