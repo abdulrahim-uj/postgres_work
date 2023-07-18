@@ -10,6 +10,8 @@ urlpatterns = [
     path('', general_views.home, name="index"),
     # ACCOUNTS
     path('auth/', include('accounts.urls', namespace="authentication_accounts")),
+    # TASKLISTS
+    path('task/', include('tasklists.urls', namespace="tasklists")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

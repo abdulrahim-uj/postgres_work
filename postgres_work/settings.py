@@ -17,7 +17,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # THIRD PARTY APPS
-    #
+    'versatileimagefield',
     # DJANGO DEFAULT APPS
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     # USER DEFINED APPS
     'basics',
     'accounts',
+    'tasklists',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,16 @@ DEFAULT_BCC_EMAIL = config('DEFAULT_BCC_EMAIL')
 DEFAULT_REPLY_TO_EMAIL = config('DEFAULT_REPLY_TO_EMAIL')
 SERVER_EMAIL = config('SERVER_EMAIL')
 ADMIN_EMAIL = config('ADMIN_EMAIL')
+
+# VERSATILE IMAGE SETTINGS
+VERSATILEIMAGEFIELD_SETTINGS = {
+    'cache_length': 2592000,
+    'cache_name': 'versatileimagefield_cache',
+    'jpeg_resize_quality': 70,
+    'sized_directory_name': '__sized__',
+    'filtered_directory_name': '__filtered__',
+    'placeholder_directory_name': '__placeholder__',
+    'create_images_on_demand': True,
+    'image_key_post_processor': None,
+    'progressive_jpeg': False
+}

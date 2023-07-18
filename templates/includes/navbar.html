@@ -19,6 +19,9 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                     {% endif %}
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'tasklists:toDo' %}">Tasks</a>
+                </li>
             </ul>
 {#        if user is authenticated show user name and also hide login, register links and show logout link only.#}
             {% if user.is_authenticated %}
