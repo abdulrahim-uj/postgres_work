@@ -18,6 +18,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # THIRD PARTY APPS
     'versatileimagefield',
+    'dbbackup',  # django-dbbackup
+    'django_apscheduler',
+
     # DJANGO DEFAULT APPS
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # USER DEFINED APPS
     'basics',
     'accounts',
@@ -142,3 +146,8 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     'image_key_post_processor': None,
     'progressive_jpeg': False
 }
+
+
+# FOR BACKUP DATABASE USING dbbackup PACKAGE django-dbbackup
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR/'backups/'}
