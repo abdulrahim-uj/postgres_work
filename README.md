@@ -36,14 +36,46 @@
 
 
 ## for schedule periodic backups
-pip install django-dbbackup
-python manage.py dbbackup       # for backup, create a bin file inside backups folder
-pip install django-apscheduler
+    pip install django-dbbackup
+
+    python manage.py dbbackup       # for backup, create a bin file inside backups folder
+
+    pip install django-apscheduler
+
     makemigrations & migrate    [django_apscheduler_djangojob, django_apscheduler_djangojobexecution]
 
+## create a scheduler and backup functions
+    from django.core.management import call_command
+    from apscheduler.schedulers.background import BackgroundScheduler
+    from django_apscheduler.jobstores import DjangoJobStore, register_events
+    
+    def my_db_backup_jobs():
+        try:
+            call_command('dbbackup')
+        except Exception as e:
+            print("SOMETHING WENT WRONG: : : ", e)
+
+    
+    def start_scheduler():
+        scheduler = BackgroundScheduler()
+        scheduler.add_jobstore(DjangoJobStore(), "default")
+        # day_of_week="mon", hour="00", minute="00"
+        scheduler.add_job(my_db_backup_jobs, 'interval', minutes=10, jobstore="default",
+                          id="minutes_10_db_backup", replace_existing=True)
+        register_events(scheduler=scheduler)
+        scheduler.start()
+
+## set this into apps.py file
+    class BasicsConfig(AppConfig):
+        default_auto_field = 'django.db.models.BigAutoField'
+        name = 'app_name'
+    
+        def ready(self):
+            from .functions import start_scheduler
+            start_scheduler()
 
 ### not works in windows
-pip install django-crontab
+    pip install django-crontab
     python manage.py crontab add    # for add
     python manage.py crontab show    # for show cron jobs
     python manage.py crontab remove  # for remove

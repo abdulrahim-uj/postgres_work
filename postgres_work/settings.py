@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'versatileimagefield',
     'dbbackup',  # django-dbbackup
     'django_apscheduler',
+    "phonenumber_field",
 
     # DJANGO DEFAULT APPS
     'django.contrib.admin',
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     'basics',
     'accounts',
     'tasklists',
+    'phonetest',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +71,7 @@ WSGI_APPLICATION = 'postgres_work.wsgi.application'
 
 
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': config('DB_NAME'),
